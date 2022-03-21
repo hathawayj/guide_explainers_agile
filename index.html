@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Model Explainers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      
+      body { font-family: 'Droid Serif'; }
+      h1 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+        color:darkslategrey;
+      }
+      h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .my-one-page-font {
+        font-size: 30px;
+      }     
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+            /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 30%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 70%;
+        float: right;
+        padding-top: 1em;
+      }
+      .inverse {
+        background: #272822;
+        color: #e4e4e1;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2, .inverse h3 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+      .lightfont {color:rgb(129, 126, 126);
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Model Explainers in PySpark
+
+---
+
+class: center, middle
+
+# What is a model explainer?
+
+???
+
+Model explainers help explain the "black box" that are machine learning models.
+As we've been going in class, we've been generating hundreds of features. But training a model on so many 
+features can be resource intensive. It can also take time to generate all those features. By figuring out the 
+features that are most relevant to our model, we can focus on those. We could even drop our useless features 
+(no correlation to the final output prediction) and generate more features that are like our most important features.
+We can do this manually, but that takes a ton of time.
+
+Another advantage to model explainers is understanding individual instances that our model predicts. 
+In statistics, we can understand things "on the average". That is to say, if someone was to apply for a loan, 
+we can say "because most people that are approved for a loan have a credit score of 750, and your credit score 
+is 700, you're unlikely to be approved for a loan". However, if we had a model explainer for a machine learning 
+model that decides if you are approved for a loan, we could look at each factor that changes the final outcome, 
+and how much it changes it by. We'll show an example of this more in later sections
+
+---
+
+# SHAP
+
+SHAP is one of the best model explainers for Python (and really, most ML is done in Python).
+
+SHAP (SHapley Additive exPlanations) is a game theoretic approach to explain the output of any machine learning model. 
+It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their 
+related extensions. (Shapley values are a solution concept in cooperative game theory).
+
+SHAP Values are used in the SHAP model explainer to show how each feature and value correlate the model output.
+
+SHAP has the ability to show the same model summaries that the built in feature importance functions can show. 
+However, the real power of model explainers comes in with the ability to show each individual observation.
+
+We'll discuss this more as we get into some sample code.
+
+---
+
+# DALEX
+
+Besides SHAP, there are more model explainer packages. Dalex is one of the popular package that you can use to explain your machine learning model. 
+You can use Dalex to do some similar things as SHAP, but you can create more insightful graphs with Dalex. 
+      
+We'll discuss this more as we present some sample code.
+
+---
+
+# What do we do with the info a model explainer gives us? 
+
+Once we have a model what information can we use it for. One of the most important parts of a model explainer is how 
+we are able to see how individual features effect the outcome of the model. In the example of the being approved for a loan we 
+could see if a feature like 'years of credit history' could negativly affect if someone is going to be approved for a loan. 
+      
+In the example of our model we can look at the shap values for the amount of buisnesses in a track and see how when we have more 
+buisnesses in a track it has a strong positive atribute to the number of restrants we have in a track. Using model explainers like 
+SHAP allows us to see if we have some information leakage from our target varialbe.
+      
+---
+
+# Let's look at the example code in Databricks
+
+The link can be [here](https://adb-5187062830023627.7.azuredatabricks.net/?o=5187062830023627#notebook/3449113359366449/command/3449113359366450).  
+Alternatively, you can find the link to the code in our GitHub template or in Databrick>Worspace>Shared>Team Presentations>Model Explainers
+
+---
+
+class: center, middle
+
+# Fin
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      remark.macros.upper = function () {
+        // `this` is the value in the parenthesis, or undefined if left out
+        return this.toUpperCase();
+      };
+
+      remark.macros.random = function () {
+        // params are passed as function arguments: ["one", "of", "these", "words"]
+        var i = Math.floor(Math.random() * arguments.length);
+        return arguments[i];
+      };
+      
+      remark.macros.scale = function (percentage) {
+        var url = this;
+        return '<img src="' + url + '" style="width: ' + percentage + '" />';
+      };
+      
+      var slideshow = remark.create({
+        ratio: "16:9",
+        highlightLanguage: 'javascript',
+        highlightStyle: 'monokai'
+       });
+    </script>
+  </body>
+</html>
